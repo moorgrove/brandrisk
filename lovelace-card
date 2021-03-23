@@ -1,0 +1,19 @@
+card:
+  entities:
+    - entity: sensor.brandrisk
+      name: Utfärdat
+    - entity: sensor.brandrisk_grass_num
+      name: Gräs Nivå
+    - entity: sensor.brandrisk_grass_msg
+      name: Gräs
+    - entity: sensor.brandrisk_wood_num
+      name: Skog Nivå
+    - entity: sensor.brandrisk_wood_msg
+      name: Skog
+  show_header_toggle: false
+  title: Brandrisk
+  type: entities
+conditions:
+  - entity: sensor.brandrisk_true
+    state: 'True'
+type: conditional
