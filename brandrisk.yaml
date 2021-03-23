@@ -1,0 +1,58 @@
+- platform: rest
+  name: "Brandrisk"
+  json_attributes:
+    - Date
+    - IssuedDate
+    - Grass
+    - GrassMsg
+    - Wood
+    - WoodMsg
+  resource: https://api.msb.se/brandrisk/RiskService.svc/CurrentRisk/sv/XX.XX|XX.XX  # Replace XX.XX|XX.XX with lat and long.
+  value_template: '{{ value_json.IssuedDate }}'
+  scan_interval: 3600
+  
+- platform: template
+  sensors:  
+    brandrisk_grass_num:
+      friendly_name: "Brandrisk Grass Num"
+      value_template: '{{ states.sensor.brandrisk.attributes.Grass }}'
+      icon_template: mdi:fire
+    brandrisk_grass_msg:
+      friendly_name: "Brandrisk Grass Msg"
+      value_template: '{{ states.sensor.brandrisk.attributes.GrassMsg }}'
+      icon_template: mdi:fire
+    brandrisk_wood_num:
+      friendly_name: "Brandrisk Wood Num"
+      value_template: '{{ states.sensor.brandrisk.attributes.Wood }}'
+      icon_template: mdi:fire       
+    brandrisk_wood_msg:
+      friendly_name: "Brandrisk Wood Msg"
+      value_template: '{{ states.sensor.brandrisk.attributes.WoodMsg }}'
+      icon_template: mdi:fire  
+    brandrisk_grass:
+      friendly_name: "Brandrisk Grass"
+      value_template: >-
+        {% if states("sensor.brandrisk_grass_num") | float > 3 %}
+          True
+        {% else %}
+          False
+        {% endif %}
+      icon_template: mdi:fire
+    brandrisk_wood:
+      friendly_name: "Brandrisk Wood"
+      value_template: >-
+        {% if states("sensor.brandrisk_wood_num") | float > 3 %}
+          True
+        {% else %}
+          False
+        {% endif %}
+      icon_template: mdi:fire    
+    brandrisk_true:
+      friendly_name: "Brandrisk True"
+      value_template: >-
+        {% if states("sensor.brandrisk_grass_num") | float > 3 or states("sensor.brandrisk_wood_num") | float > 3 %}
+          True
+        {% else %}
+          False
+        {% endif %}
+      icon_template: mdi:fire          
